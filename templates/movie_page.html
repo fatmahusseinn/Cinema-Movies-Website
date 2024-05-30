@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{movie[2]}}</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .movie-details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .movie-image {
+    
+    margin-right: 20px;
+  }
+
+  .movie-info {
+    flex-grow: 1;
+  }
+
+  .movie-title {
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .movie-description {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .movie-price {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+
+  img{
+    height: 500px;
+    width: 500px;
+  }
+
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="movie-details">
+      <img class="movie-image" src="{{ url_for('static', filename=movie[5]) }}" alt="Movie">
+      <div class="movie-info">
+        <h1 class="movie-title">Movie Name; {{movie[2]}}</h1>
+        <p class="movie-description">Description: {{movie[4]}}</p>
+        <p class="movie-price">Price: ${{movie[3]}}</p>
+        <p>No of buyers: {{movie[7]}}</p>
+      </div>
+    </div>
+    <div class="button-group">
+        {% if show_buy_button %} <!--It's just a variable and that if condition and the variable must be true or false, if true will show it, if false will hide it-->
+        <form action="{{ url_for('buyMovie', movie_id=movie[0])}}" method="post">
+                <!-- Sending the price of the item in a hidden input -->
+
+                <input type="hidden" name="id" value="{{movie[0]}}" />
+                <button class="btn btn-primary float-end" type="submit">Buy It</button>
+		</form>
+        {% endif %}
+
+        {% if show_hidden_button %}
+        <div class="additional-buttons">
+            <a href="{{ url_for('download_video',movie_id=movie[0]) }}" class="btn" >Download</a>
+            <button class="btn watch-btn">Watch</button>
+        </div>
+        {% endif %}
+
+        
+    </div>
+
+
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <div>
+      {% for comment in comments %}
+      <div class="col-md-12 col-lg-12 py-2 px-3 mt-1 border border-3">
+        <h5>{{ comment[0] }} | <small>{{ comment[2] }}</small></h5>
+        <hr />
+        <p>{{ comment[1] }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    
+    <br />
+    <form class="login-form" method="post" action="{{ url_for('addComment', movie_id=movie[0]) }}">
+
+
+      <div class="mb-3">
+        <textarea
+          type=""
+          class="form-control"
+          placeholder="Comment"
+          required
+          name="comment"
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Post Comment</button>
+    </form>
+  </div>
+
+
+
+
+
+
+    <div class="video-player" style="display: none;">
+        <video controls width="640" height="360">
+            <source src="{{url_for('static', filename=movie[6])}}"> <!--I delete type attribute-->
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const buyBtn = document.querySelector('.buy-btn');
+        const additionalButtons = document.querySelector('.additional-buttons');
+        const watchBtn = document.querySelector('.watch-btn');
+        const videoPlayer = document.querySelector('.video-player');
+
+        
+
+        watchBtn.addEventListener('click', function() {
+        additionalButtons.style.display = 'none';
+        videoPlayer.style.display = 'block';
+        });
+        });
+    </script>
+  </div>
+</body>
+</html>

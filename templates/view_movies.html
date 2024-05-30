@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie Cards</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 80px auto 20px auto; /* Add top margin to create space below the fixed search bar */
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    padding: 15px;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+  }
+
+  .card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .card h2 {
+    margin: 10px 0;
+    font-size: 18px;
+  }
+
+  .btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+
+  /* Basic CSS for the search bar container */
+  .search-container {
+    position: fixed; /* Fix the search bar position */
+    top: 0; /* Position it at the top of the viewport */
+    width: 100%; /* Make it full width */
+    background-color: #fff; /* Background color for the search bar */
+    padding: 10px; /* Add some padding for spacing */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for a raised effect */
+    z-index: 1000; /* Ensure it appears above other content */
+
+    /*
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;*/
+  }
+  .search-container form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Style for the search input */
+  .search-input {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+  }
+
+  /* Style for the search button */
+  .search-button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+
+  /* Hover effect for the search button */
+  .search-button:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+  <div class="search-container">
+    <form method="post" action="{{ url_for('seachByName') }}">
+      <input type="text" class="search-input" placeholder="Search..." name="search_input">
+      <button class="search-button" type="submit">Search</button>
+    </form>
+      
+  </div>
+  <div class="container">
+    {% for movie in movies %}
+    <div class="card">
+      <img src="{{ url_for('static', filename=movie[5]) }}" alt="Movie 1"> <!--3shan ygeb path of file image mynf3sh tdelh elesm bs lazm tstkhdm url_for()-->
+      <h2>{{movie[2]}}</h2>
+      <p>No of buyers: {{movie[7]}}</p>
+      <a class="btn" href="{{ url_for('view_movie', movie_id=movie[0]) }}">View more</a>
+      
+    </div>
+    {% endfor %}
+    <!-- Add more cards here -->
+  </div>
+</body>
+</html>

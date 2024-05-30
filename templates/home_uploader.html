@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome Page</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Reset some default styles for consistency */
+      body,
+      h1,
+      p {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Basic styling for the container */
+      .container {
+        text-align: center;
+        margin-top: 100px;
+      }
+
+      /* Styling for the welcome message */
+      h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      /* Styling for the button container */
+      .buttons {
+        display: flex;
+        justify-content: center;
+      }
+
+      /* Styling for the buttons (links) */
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Hover effect for the buttons */
+      .button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to Our Website</h1>
+      <h2>Welcome {{uploader[1]}}</h2>
+      <div class="buttons">
+        <a href="{{url_for('uploadMovie')}}" class="button">Upload Movie</a>
+        <a href="{{url_for('profile')}}" class="button">View Profile</a>
+        <a href="{{url_for('withdraw')}}" class="button">Withdraw</a>
+        <a href="{{url_for('logout')}}" class="button">Logout</a>
+      </div>
+    </div>
+  </body>
+</html>
